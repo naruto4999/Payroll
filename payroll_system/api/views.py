@@ -1,10 +1,15 @@
 from django.forms import ValidationError
 from django.shortcuts import render
 from rest_framework import generics, status, mixins
-from .serializers import CompanySerializer, CreateCompanySerializer, CompanyEntrySerializer
-from .models import Company, CompanyDetails
+from .serializers import CompanySerializer, CreateCompanySerializer, CompanyEntrySerializer, UserSerializer
+from .models import Company, CompanyDetails, User
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
+
+
 
 # Create your views here.
 
@@ -87,5 +92,22 @@ class CompanyDestroyAPIView(generics.DestroyAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
     lookup_field = 'id'
-            
 
+#Viewsets
+
+class UserViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get']
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return User.objects.all()
+
+    def get_object(self):
+        lookup_field_value = self.kwargs[self.lookup_field]
+
+        obj = User.objects.get(lookup_field_value)
+        self.check_object_permissions(self.request, obj)
+
+        return obj

@@ -10,12 +10,13 @@ import HolidayEntryForm from "./menu/MasterEntry/forms/HolidayEntryForm";
 import SalaryGradeEntryForm from "./menu/MasterEntry/forms/SalaryGradeEntryForm";
 import ShiftEntryForm from "./menu/MasterEntry/forms/ShiftEntryForm";
 import NewCompanyEntryForm from "./menu/MasterEntry/forms/NewCompanyEntryForm";
+import LoginForm from "./authentication/Login"
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<MenuItem/>}>
+        <Route path="" element={<MenuItem/>}>
           <Route exact path="menu/company-entry" element={<CompanyEntryForm/>}/>
           <Route exact path="menu/bank-entry" element={<BankEntryForm/>}/>
           <Route exact path="menu/category-entry" element={<CategoryEntryForm/>}/>
@@ -29,6 +30,7 @@ function App() {
 
           
         </Route>
+        <Route path="login" element={<LoginForm/>}/>
       </Routes>
     </div>
   );

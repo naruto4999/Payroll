@@ -1,8 +1,10 @@
 from dataclasses import field
 from rest_framework import serializers
 
-from .models import Company, CompanyDetails
+from .models import Company, CompanyDetails, User
 from rest_framework import serializers
+
+
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +30,10 @@ class CompanyEntrySerializer(serializers.ModelSerializer):
 
             # self.fields['company'] =  CompanySerializer(read_only=True)
             # return super(CompanyEntrySerializer, self).to_representation(instance)
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'is_active']
+        read_only_field = ['is_active']
